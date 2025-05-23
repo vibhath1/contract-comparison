@@ -13,7 +13,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ leftFile, rightFile }) 
       <div className="w-1/2 flex flex-col border-r">
         <div className="bg-gray-100 p-2 flex justify-between items-center border-b">
           <h3 className="font-medium truncate">{leftFile?.name || 'Document 1'}</h3>
-          <button className="text-gray-500 hover:text-gray-700">×</button>
+          
         </div>
         <div className="flex-1 overflow-auto p-4">
           {/* This is where document content would be rendered */}
@@ -45,7 +45,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ leftFile, rightFile }) 
       <div className="w-1/2 flex flex-col">
         <div className="bg-gray-100 p-2 flex justify-between items-center border-b">
           <h3 className="font-medium truncate">{rightFile?.name || 'Document 2'}</h3>
-          <button className="text-gray-500 hover:text-gray-700">×</button>
+          
         </div>
         <div className="flex-1 overflow-auto p-4">
           {/* This is where document content would be rendered */}

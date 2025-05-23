@@ -46,7 +46,7 @@ const App: React.FC = () => {
             <h1 className="text-xl font-bold">Contract Comparison</h1>
             <button 
               onClick={handleBackToUpload}
-              className="text-purple-600 hover:text-purple-800"
+              className="bg-purple-500 text-white hover:bg-purple-600 py-2 px-6 rounded-md"
             >
               Back to Upload
             </button>
