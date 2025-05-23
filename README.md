@@ -15,3 +15,6 @@ A FastAPI-based backend for comparing contract documents with AI-enhanced analys
 1. Install dependencies:
 ```bash
 pip install -r requirements.txt
+2.Run the backemd:
+```bash
+python -m uvicorn app.main:app --reload
