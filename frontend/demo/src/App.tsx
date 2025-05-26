@@ -29,6 +29,7 @@ const App: React.FC = () => {
       {!showComparison ? (
         <>
           <LandingPage />
+
           <div id="uploader-section">
             <Uploader 
               leftFile={leftFile}
@@ -37,6 +38,7 @@ const App: React.FC = () => {
               setRightFile={setRightFile}
               onCompare={handleCompare}
             />
+            
           </div>
         </>
       ) : (
