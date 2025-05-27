@@ -24,6 +24,7 @@ const App: React.FC = () => {
   };
   
   return (
+  <div className="min-h-screen text-white bg-gradient-to-t from-black via-black to-orange-500 h-screen w-full">
     <div className="p-8 max-w-7xl mx-auto">
       {/* Show landing page and uploader if not in comparison mode */}
       {!showComparison ? (
@@ -60,6 +61,7 @@ const App: React.FC = () => {
         </div>
       )}
     </div>
+  </div>
   );
 };
 
