@@ -13,10 +13,14 @@
     "@heroicons/react": "^2.2.0",
     "@react-three/drei": "^10.0.8",
     "@react-three/fiber": "^9.1.2",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.12.1",
+    "lucide-react": "^0.511.0",
+    "motion": "^12.15.0",
     "react": "^19.1.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.0",
     "three": "^0.176.0"
   },
   "devDependencies": {

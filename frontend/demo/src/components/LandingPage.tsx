@@ -1,91 +1,45 @@
 // components/LandingPage.tsx
-import React, { useState } from 'react';
-import Uploader from './Uploader';
-import DocumentViewer from './DocumentViewer';
-import SummaryTable from './SummaryTable';
-import GradientBackground from './GradientBackground';
+import React from 'react';
 import ParticleText3D from './ParticleText3D';
-import AnimatedBorderBox from './AnimatedBorderBox';
-
-
+import {GlowingEffectDemo} from './GlowingEffectDemo';
 
 const LandingPage: React.FC = () => {
-  const [leftFile, setLeftFile] = useState<File | null>(null);
-  const [rightFile, setRightFile] = useState<File | null>(null);
-  const [showComparison, setShowComparison] = useState(false);
-
-  const handleCompare = () => setShowComparison(true);
-  const handleBackToUpload = () => setShowComparison(false);
-  const scrollToUploader = () => {
-    const uploaderSection = document.getElementById("uploader-section");
-    if (uploaderSection) {
-      uploaderSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <div className="relative w-full bg-[url('/images/Verdicto.png')] bg-cover bg-center">
-      <GradientBackground />
-      <div className="relative z-10">
-        {!showComparison ? (
-          <>
-            <section className="min-h-screen flex flex-col justify-center items-center relative px-8">
-              <div className="flex-1 flex flex-col justify-center items-center">
-                <ParticleText3D
-                  text="verdicto" 
-                  className="mb-8"
-                />
+    <div className="w-full bg-[url('/images/verdictobg3.png')] bg-cover bg-center">
+      {/* Hero Section */}
+      <section className="min-h-screen flex flex-col justify-center items-center text-center">
+        <ParticleText3D text="Verdicto" className="mb-3" />
+        <h1 className="text-[24px] text-gray-300 font-italiana -mt-14 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]">
+          Contract Comparison AI Tool
+        </h1>
+      </section>
 
-                
-                  <h1 className="text-[30px] text-gray-100 font-italiana absolute mt-[150px] ">
-                    Contract Comparison AI Tool
-                  </h1>
-                  
-              </div>
-            </section>
+      {/* Main Content Section */}
+      <section className="min-h-screen flex flex-col justify-center items-center px-8 py-20 gap-10">
+        {/*<div className="flex flex-wrap gap-10 justify-center">
+          <div className="flex flex-col gap-10">
+            <AnimatedBorderBox>
+              <h2 className="text-2xl font-bold text-orange-500">Introducing our AI powered Contract Comparison</h2>
+            </AnimatedBorderBox>
 
             <AnimatedBorderBox>
-        <h1 className="text-2xl font-bold">Your Glowing Box</h1>
-        <p>Drop in content here with styled glow effects.</p>
-      </AnimatedBorderBox>
+              <h2 className="text-2xl font-bold text-orange-500">Add necessary content</h2>
+            </AnimatedBorderBox>
+          </div>
+          <AnimatedBorderBox className="flex flex-1">
+            <h2 className="text-3xl font-bold text-orange-500">Your Contract Solution in ONE CLICK!</h2>
+          </AnimatedBorderBox>
+        </div>
 
-            <section id="uploader-section" className="min-h-screen flex items-center justify-center py-20">
-              <div className="w-full max-w-7xl mx-auto px-8">
-                <Uploader 
-                  leftFile={leftFile}
-                  rightFile={rightFile}
-                  setLeftFile={setLeftFile}
-                  setRightFile={setRightFile}
-                  onCompare={handleCompare}
-                />
-              </div>
-            </section>
-          </>
-        ) : (
-          <section className="min-h-screen py-8">
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="flex flex-col h-full">
-                <header className="flex justify-between items-center mb-8">
-                  <h1 className="text-3xl font-bold">Contract Comparison</h1>
-                  <button 
-                    onClick={handleBackToUpload}
-                    className="bg-purple-600 text-white hover:bg-purple-700 transition-colors py-2 px-6 rounded-md font-medium"
-                  >
-                    Back to Upload
-                  </button>
-                </header>
+        <AnimatedBorderBox className="w-full max-w-3xl">
+          <h2 className="text-2xl font-bold text-orange-500">Add necessary content</h2>
+        </AnimatedBorderBox>
 
-                <main className="flex-1">
-                  <DocumentViewer leftFile={leftFile} rightFile={rightFile} />
-                  <div className="mt-8">
-                    <SummaryTable />
-                  </div>
-                </main>
-              </div>
-            </div>
-          </section>
-        )}
-      </div>
+        <h2 className="text-xl mt-12 text-white">Click the button below to Start.</h2>
+        */}
+
+        <GlowingEffectDemo></GlowingEffectDemo>
+      </section>
     </div>
   );
 };

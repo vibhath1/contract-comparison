@@ -21,7 +21,7 @@ function ParticleSystem({ text }: ParticleSystemProps) {
     if (!ctx) return new Float32Array(0);
 
     canvas.width = 2000;
-    canvas.height = 400;
+    canvas.height = 410;
 
     ctx.font = '500px Century';
     ctx.fillStyle = 'white';
@@ -31,7 +31,7 @@ function ParticleSystem({ text }: ParticleSystemProps) {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
-    const scale = 0.028;
+    const scale = 0.029;
     const particles = [];
     const gap = 3;
 
