@@ -46,16 +46,6 @@ const LandingPage: React.FC = () => {
                   >
                     Contract Comparison AI Tool
                   </h1>
-                  <h1
-                    className="text-[30px] font-italiana text-white mix-blend-overlay"
-                    style={{
-                      filter: "brightness(1.2)",
-                      position: "relative",
-                      zIndex: 2,
-                    }}
-                  >
-                    Contract Comparison AI Tool
-                  </h1>
                 </div>
               </div>
 
