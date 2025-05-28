@@ -5,6 +5,7 @@ import DocumentViewer from './DocumentViewer';
 import SummaryTable from './SummaryTable';
 import GradientBackground from './GradientBackground';
 import ParticleText3D from './ParticleText3D';
+
 const LandingPage: React.FC = () => {
   const [leftFile, setLeftFile] = useState<File | null>(null);
   const [rightFile, setRightFile] = useState<File | null>(null);
@@ -27,7 +28,7 @@ const LandingPage: React.FC = () => {
           <>
             <section className="min-h-screen flex flex-col justify-center items-center relative px-8">
               <div className="flex-1 flex flex-col justify-center items-center">
-                <ParticleText3D 
+                <ParticleText3D
                   text="Verdicto" 
                   className="mb-8"
                 />

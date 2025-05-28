@@ -31,7 +31,7 @@ function ParticleSystem({ text }: ParticleSystemProps) {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
-    const scale = 0.02;
+    const scale = 0.028;
     const particles = [];
     const gap = 3;
 
@@ -79,7 +79,7 @@ function ParticleSystem({ text }: ParticleSystemProps) {
       const dy = mouseY - y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < 3) {
+      if (distance < 5) {
         const force = (3 - distance) / 3;
         const angle = Math.atan2(dy, dx);
         positions[i] = x - Math.cos(angle) * force * 1.5 + Math.sin(time * 2 + i) * 0.1;
@@ -105,15 +105,14 @@ function ParticleSystem({ text }: ParticleSystemProps) {
         />
       </bufferGeometry>
       <pointsMaterial
-        map={discTexture} // ✅ Disc shape texture
         size={0.15}
-        color="#ffffff"
-        transparent
-        opacity={0.9}
-        alphaTest={0.5} // ✅ Helps avoid black square artifacts
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
+  map={discTexture} // <- Your loaded disc texture
+  alphaTest={0.5}
+  transparent
+  opacity={0.9}
+  sizeAttenuation
+  blending={THREE.AdditiveBlending} // or another blending mode
+  depthWrite={false}
       />
     </points>
   );
