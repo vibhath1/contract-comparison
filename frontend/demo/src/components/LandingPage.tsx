@@ -5,6 +5,9 @@ import DocumentViewer from './DocumentViewer';
 import SummaryTable from './SummaryTable';
 import GradientBackground from './GradientBackground';
 import ParticleText3D from './ParticleText3D';
+import AnimatedBorderBox from './AnimatedBorderBox';
+
+
 
 const LandingPage: React.FC = () => {
   const [leftFile, setLeftFile] = useState<File | null>(null);
@@ -29,47 +32,22 @@ const LandingPage: React.FC = () => {
             <section className="min-h-screen flex flex-col justify-center items-center relative px-8">
               <div className="flex-1 flex flex-col justify-center items-center">
                 <ParticleText3D
-                  text="Verdicto" 
+                  text="verdicto" 
                   className="mb-8"
                 />
 
-                <div className="relative inline-block select-none mt-[-16px]">
-                  <h1
-                    aria-hidden="true"
-                    className="text-[30px] font-italiana text-white mix-blend-overlay absolute top-0 left-0"
-                    style={{
-                      filter: "brightness(1.2)",
-                      pointerEvents: "none",
-                      userSelect: "none",
-                      zIndex: 1,
-                    }}
-                  >
+                
+                  <h1 className="text-[30px] text-gray-100 font-italiana absolute mt-[150px] ">
                     Contract Comparison AI Tool
                   </h1>
-                </div>
+                  
               </div>
-
-              <button 
-                onClick={scrollToUploader}
-                className="absolute bottom-10 animate-bounce p-2 rounded-full hover:bg-white/10 transition-colors"
-                aria-label="Scroll to uploader"
-              >
-                <svg 
-                  className="w-8 h-8 text-white/70 hover:text-white transition-colors" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                  />
-                </svg>
-              </button>
             </section>
+
+            <AnimatedBorderBox>
+        <h1 className="text-2xl font-bold">Your Glowing Box</h1>
+        <p>Drop in content here with styled glow effects.</p>
+      </AnimatedBorderBox>
 
             <section id="uploader-section" className="min-h-screen flex items-center justify-center py-20">
               <div className="w-full max-w-7xl mx-auto px-8">

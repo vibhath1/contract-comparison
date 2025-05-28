@@ -7,6 +7,7 @@ module.exports = {
         century: ['"Century Gothic"', 'sans-serif'],
         italiana: ['Italiana', 'serif']
       },
+      
     },
   },
   plugins: [],
