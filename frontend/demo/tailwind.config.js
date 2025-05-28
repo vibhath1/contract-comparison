@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {},
+  theme: {
+    extend: {
+      fontFamily: {
+        century: ['"Century Gothic"', 'sans-serif'],
+        italiana: ['Italiana', 'serif']
+      },
+    },
+  },
   plugins: [],
 };
