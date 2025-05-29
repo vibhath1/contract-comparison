@@ -2,6 +2,8 @@
 import React from 'react';
 import ParticleText3D from './ParticleText3D';
 import { EvervaultCardDemo } from './EvervaultCardDemo';
+import { HoverBorderGradientDemo } from './HoverBorderGradientDemo';
+
 
 const LandingPage: React.FC = () => {
   return (
@@ -10,12 +12,12 @@ const LandingPage: React.FC = () => {
       <section className="min-h-screen flex flex-col justify-center items-center text-center">
         <ParticleText3D text="Verdicto" className="mb-3" />
         <h1 className="text-[24px] text-gray-300 font-italiana -mt-14 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]">
-          Contract Comparison AI Tool
+          Contract Comparison AI Tool (do we use ai)?! recheck the objectives and usecases.
         </h1>
       </section>
 
       {/* Main Content Section */}
-      <section className="min-h-screen flex flex-col justify-center items-center px-8 py-20 gap-10">
+      <section className="min-h-screen flex flex-col justify-center items-center">
         {/*<div className="flex flex-wrap gap-10 justify-center">
           <div className="flex flex-col gap-10">
             <AnimatedBorderBox>
@@ -38,8 +40,13 @@ const LandingPage: React.FC = () => {
         <h2 className="text-xl mt-12 text-white">Click the button below to Start.</h2>
         */}
 
+<div className='flex justify-center gap-5'> 
           <EvervaultCardDemo></EvervaultCardDemo>
-
+</div>
+      </section>
+      <section className="min-h-screen flex flex-col justify-center items-center">
+        <h1 className='text-orange-500 text-[30px]'>Click the button below to Start.</h1>
+        <HoverBorderGradientDemo></HoverBorderGradientDemo>
       </section>
     </div>
   );

@@ -105,7 +105,7 @@ function ParticleSystem({ text }: ParticleSystemProps) {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.15}
+        size={0.20}
   map={discTexture} // <- Your loaded disc texture
   alphaTest={0.5}
   transparent
