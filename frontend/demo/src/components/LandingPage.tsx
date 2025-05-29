@@ -1,7 +1,7 @@
 // components/LandingPage.tsx
 import React from 'react';
 import ParticleText3D from './ParticleText3D';
-import {GlowingEffectDemo} from './GlowingEffectDemo';
+import { EvervaultCardDemo } from './EvervaultCardDemo';
 
 const LandingPage: React.FC = () => {
   return (
@@ -38,7 +38,8 @@ const LandingPage: React.FC = () => {
         <h2 className="text-xl mt-12 text-white">Click the button below to Start.</h2>
         */}
 
-        <GlowingEffectDemo></GlowingEffectDemo>
+          <EvervaultCardDemo></EvervaultCardDemo>
+
       </section>
     </div>
   );
