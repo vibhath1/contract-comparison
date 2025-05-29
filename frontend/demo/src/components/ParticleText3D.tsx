@@ -1,18 +1,18 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
 
 interface ParticleSystemProps {
   text: string;
+  isHovered: boolean; // added prop to track hover
 }
 
-function ParticleSystem({ text }: ParticleSystemProps) {
+function ParticleSystem({ text, isHovered }: ParticleSystemProps) {
   const meshRef = useRef<THREE.Points>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
 
-  // ✅ Load disc texture from public folder
   const discTexture = useLoader(TextureLoader, '/images/disc.png');
 
   const particlesPosition = useMemo(() => {
@@ -55,26 +55,31 @@ function ParticleSystem({ text }: ParticleSystemProps) {
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
+      if (!isHovered) return; // Only update mouse position if hovered
+
       mouseRef.current = {
         x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: -(event.clientY / window.innerHeight) * 2 + 1
+        y: -(event.clientY / window.innerHeight) * 2 + 1,
       };
     };
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isHovered]); // reattach listener on hover change
 
   useFrame((state) => {
     if (!meshRef.current) return;
     const positions = meshRef.current.geometry.attributes.position.array as Float32Array;
     const time = state.clock.elapsedTime;
 
+    // If not hovered, move mouse way off-screen so no influence
+    const mouseX = isHovered ? mouseRef.current.x * viewport.width * 0.5 : 9999;
+    const mouseY = isHovered ? mouseRef.current.y * viewport.height * 0.5 : 9999;
+
     for (let i = 0; i < positions.length; i += 3) {
       const x = originalPositions[i];
       const y = originalPositions[i + 1];
       const z = originalPositions[i + 2];
-      const mouseX = mouseRef.current.x * viewport.width * 0.5;
-      const mouseY = mouseRef.current.y * viewport.height * 0.5;
       const dx = mouseX - x;
       const dy = mouseY - y;
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -99,35 +104,36 @@ function ParticleSystem({ text }: ParticleSystemProps) {
   return (
     <points ref={meshRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[particlesPosition, 3]}
-        />
+        <bufferAttribute attach="attributes-position" args={[particlesPosition, 3]} />
       </bufferGeometry>
       <pointsMaterial
         size={0.20}
-  map={discTexture} // <- Your loaded disc texture
-  alphaTest={0.5}
-  transparent
-  opacity={0.9}
-  sizeAttenuation
-  blending={THREE.AdditiveBlending} // or another blending mode
-  depthWrite={false}
+        map={discTexture}
+        alphaTest={0.5}
+        transparent
+        opacity={0.9}
+        sizeAttenuation
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
       />
     </points>
   );
 }
 
 const ParticleText3D: React.FC<{ text: string; className?: string }> = ({ text, className }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className={className} style={{ width: '1000px', height: '300px' }}>
-      <Canvas
-        camera={{ position: [0, 0, 25], fov: 45 }}
-        style={{ background: 'transparent' }}
-      >
+    <div
+      className={className}
+      style={{ width: '1000px', height: '300px' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Canvas camera={{ position: [0, 0, 25], fov: 45 }} style={{ background: 'transparent' }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
-        <ParticleSystem text={text} />
+        <ParticleSystem text={text} isHovered={isHovered} />
       </Canvas>
     </div>
   );

@@ -55,7 +55,7 @@ export const EvervaultCard = ({
 
       return (
         <span
-          className="leading-[55px] z-20 text-[50px] cursor-default"
+          className="leading-[55px] z-20 text-[50px]"
         >
           <span className="outlined-text outlined-text:hover hover:text-[#dbdbdb]">
             {before}

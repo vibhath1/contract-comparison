@@ -91,7 +91,7 @@
 }
 
 .glass-effectstyle {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.035);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
