@@ -13,9 +13,8 @@ export function EvervaultCardDemo() {
           <EvervaultCard text="Introducing our Contract Comparison AI" />
         </div>
         {/* Bottom left box, same height as lower right box */}
-        <div className="glass-effectstyle hover:bg-transparent transition-colors duration-500 ease-in-out border rounded-xl border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start p-4 relative h-[15rem] shadow-sm">
-
-
+        <div className=" glass-effectstyle hover:bg-transparent transition-colors duration-500 ease-in-out border rounded-xl border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start p-4 relative h-[15rem] shadow-sm">
+        
         </div>
         </div>
         {/* Right column */}

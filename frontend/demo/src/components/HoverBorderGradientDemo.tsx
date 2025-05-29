@@ -3,7 +3,7 @@ import { HoverBorderGradient } from "../components/HoverBorderGradient";
 
 export function HoverBorderGradientDemo() {
   return (
-    <div className="m-4 flex justify-center text-center">
+    <div className="m-5 flex justify-center text-center">
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
