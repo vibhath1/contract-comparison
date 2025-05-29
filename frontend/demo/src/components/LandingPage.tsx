@@ -18,31 +18,9 @@ const LandingPage: React.FC = () => {
 
       {/* Main Content Section */}
       <section className="min-h-screen flex flex-col justify-center items-center">
-        {/*<div className="flex flex-wrap gap-10 justify-center">
-          <div className="flex flex-col gap-10">
-            <AnimatedBorderBox>
-              <h2 className="text-2xl font-bold text-orange-500">Introducing our AI powered Contract Comparison</h2>
-            </AnimatedBorderBox>
-
-            <AnimatedBorderBox>
-              <h2 className="text-2xl font-bold text-orange-500">Add necessary content</h2>
-            </AnimatedBorderBox>
-          </div>
-          <AnimatedBorderBox className="flex flex-1">
-            <h2 className="text-3xl font-bold text-orange-500">Your Contract Solution in ONE CLICK!</h2>
-          </AnimatedBorderBox>
-        </div>
-
-        <AnimatedBorderBox className="w-full max-w-3xl">
-          <h2 className="text-2xl font-bold text-orange-500">Add necessary content</h2>
-        </AnimatedBorderBox>
-
-        <h2 className="text-xl mt-12 text-white">Click the button below to Start.</h2>
-        */}
-
-<div className='flex justify-center gap-5'> 
-          <EvervaultCardDemo></EvervaultCardDemo>
-</div>
+      <div className='flex justify-center gap-5'> 
+      <EvervaultCardDemo></EvervaultCardDemo>
+      </div>
       </section>
       <section className="min-h-screen flex flex-col justify-center items-center">
         <h1 className='text-orange-500 text-[30px]'>Click the button below to Start.</h1>

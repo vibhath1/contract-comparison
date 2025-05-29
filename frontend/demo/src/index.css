@@ -82,10 +82,22 @@
 
 .outlined-text {
   color: transparent;
-  -webkit-text-stroke: 0.5px white;
+  -webkit-text-stroke: 0.5px #dbdbdb;
 }
 
 .outlined-text:hover {
   -webkit-text-stroke: 0;
-  color: white;
+  color:#dbdbdb;
+}
+
+.glass-effectstyle {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.noglass-effectstyle {
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }

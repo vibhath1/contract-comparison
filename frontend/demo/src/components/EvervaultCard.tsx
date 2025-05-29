@@ -57,13 +57,13 @@ export const EvervaultCard = ({
         <span
           className="leading-[55px] z-20 text-[50px] cursor-default"
         >
-          <span className="outlined-text outlined-text:hover hover:text-white">
+          <span className="outlined-text outlined-text:hover hover:text-[#dbdbdb]">
             {before}
           </span>
-          <span className="text-orange-500 hover:text-white">
+          <span className="text-orange-500 hover:text-[#dbdbdb]">
             {highlight}
           </span>
-          <span className="outlined-text outlined-text:hover hover:text-white">
+          <span className="outlined-text outlined-text:hover hover:text-[#dbdbdb]">
             {after}
           </span>
         </span>
@@ -95,7 +95,7 @@ export function CardPattern({ mouseX, mouseY, randomString }: any) {
         className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay  group-hover/card:opacity-100"
         style={style}
       >
-        <p className="absolute inset-x-0 text-[13px] h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
+        <p className="absolute inset-x-0 text-[13px] h-full break-words whitespace-pre-wrap text-white/30 font-mono font-bold transition duration-500">
           {randomString}
         </p>
       </motion.div>
