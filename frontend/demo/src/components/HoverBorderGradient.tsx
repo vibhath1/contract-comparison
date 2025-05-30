@@ -1,30 +1,40 @@
 "use client";
-import { useState, useEffect } from "react";
-import type { ElementType, HTMLAttributes, ReactNode } from "react";
 
+import { useState, useEffect } from "react";
+import type { ElementType, ComponentPropsWithoutRef, ReactNode } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
-interface HoverBorderGradientProps extends HTMLAttributes<HTMLElement> {
-  as?: ElementType;
+const movingMap: Record<Direction, string> = {
+  TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+  LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+  BOTTOM: "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+  RIGHT: "radial-gradient(16.2% 41.2% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+};
+
+const highlight =
+  "radial-gradient(80% 181.15942028985506% at 50% 50%, #ff3d00 0%, rgba(255, 255, 255, 0) 100%)";
+
+type HoverBorderGradientProps<T extends ElementType> = {
+  as?: T;
   containerClassName?: string;
   className?: string;
   duration?: number;
   clockwise?: boolean;
   children: ReactNode;
-}
+} & Omit<ComponentPropsWithoutRef<T>, "as" | "children">;
 
-export function HoverBorderGradient({
+export function HoverBorderGradient<T extends ElementType = "button">({
+  as,
   children,
   containerClassName,
   className,
-  as: Tag = "button",
   duration = 1,
   clockwise = true,
   ...props
-}: HoverBorderGradientProps) {
+}: HoverBorderGradientProps<T>) {
   const [hovered, setHovered] = useState(false);
   const [direction, setDirection] = useState<Direction>("TOP");
 
@@ -37,27 +47,16 @@ export function HoverBorderGradient({
     return directions[nextIndex];
   };
 
-  const movingMap: Record<Direction, string> = {
-    TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    BOTTOM: "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    RIGHT: "radial-gradient(16.2% 41.2% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-  };
-
-  const highlight =
-    "radial-gradient(80% 181.15942028985506% at 50% 50%, #ff3d00 0%, rgba(255, 255, 255, 0) 100%)";
-
   useEffect(() => {
     if (!hovered) {
       const interval = setInterval(() => {
-        setDirection(prev => rotateDirection(prev));
+        setDirection((prev) => rotateDirection(prev));
       }, duration * 1000);
       return () => clearInterval(interval);
     }
   }, [hovered, duration, clockwise]);
 
-  // Fix here: cast Tag to React.ElementType<any>
-  const Component = Tag as React.ElementType<any>;
+  const Component = as || "button";
 
   return (
     <Component
