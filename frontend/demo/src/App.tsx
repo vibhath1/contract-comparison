@@ -5,7 +5,7 @@ import CustomCursor from './components/CustomCursor';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="w-full max-w-screen overflow-x-hidden">
 
       
   <LandingPage />
