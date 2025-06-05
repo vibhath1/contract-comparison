@@ -1,2 +1,67 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and normalize line endings to LF
 * text=auto
+
+# Explicitly set binary files (no EOL normalization)
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.bmp     binary
+*.tif     binary
+*.tiff    binary
+*.pdf     binary
+*.doc     binary
+*.docx    binary
+
+# Model files (ML model weights, checkpoints, etc.)
+*.h5      binary
+*.ckpt    binary
+*.pth     binary
+*.onnx    binary
+*.weights binary
+*.pt      binary
+*.pb      binary
+*.tflite  binary
+*.cfg     binary
+
+# Archives and distributions
+*.egg     binary
+*.egg-info/* -text
+dist/*    -text
+build/*   -text
+
+# Caches, temp, uploads, and outputs
+uploads/**     -text
+temp/**        -text
+tmp/**         -text
+output/**      -text
+media/**       -text
+extracted_text/**   -text
+extracted_images/** -text
+
+# Caches and data folders (e.g., transformers, nltk, EasyOCR)
+.cache/**            -text
+.cache/huggingface/** -text
+.cache/torch/**      -text
+nltk_data/**         -text
+easyocr_cache/**     -text
+easyocr_model/**     -text
+pdf2image_cache/**   -text
+
+# Spacy models downloaded inside repo (binary)
+models/**        binary
+en_core_web_sm/** binary
+
+# Logs, err, and out files (text)
+*.log     text
+*.err     text
+*.out     text
+
+# Jupyter checkpoints (text)
+.ipynb_checkpoints/** text
+
+# Misc
+*.html    text
+
+# Git should treat these as text, no EOL normalization
+.gitattributes text
+.gitignore text

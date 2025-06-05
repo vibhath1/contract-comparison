@@ -1,8 +1,9 @@
-from typing import Dict, List, Any
+#ai_analyzer.py
+from app.core.semantic_model import get_semantic_model
+from typing import Dict, List, Any, Optional
 import numpy as np
 from app.models.schemas import Difference
 
-# Try to import sentence-transformers, but provide fallbacks if not available
 try:
     from sentence_transformers import SentenceTransformer
     MODEL_AVAILABLE = True
@@ -13,113 +14,94 @@ except ImportError:
 class AIAnalyzer:
     def __init__(self, model_name: str = "paraphrase-MiniLM-L6-v2"):
         self.model_name = model_name
-        self.model = None
+        self.model = get_semantic_model(model_name)
         
-        # Initialize model if available
-        if MODEL_AVAILABLE:
-            try:
-                self.model = SentenceTransformer(model_name)
-                print(f"Loaded semantic similarity model: {model_name}")
-            except Exception as e:
-                print(f"Error loading model: {str(e)}")
-    
+        
     def analyze_differences(self, differences: List[Difference]) -> List[Difference]:
-        """Enhance differences with AI analysis."""
-        # This is a placeholder implementation
-        # In a real implementation, we'd analyze the differences more thoroughly
-        
         enhanced_differences = []
         for diff in differences:
-            # Create a copy of the difference to modify
             enhanced_diff = diff.dict()
-            
-            # Analyze importance based on content if available
-            if diff.original_content and diff.modified_content:
-                importance = self._analyze_importance(diff.original_content, diff.modified_content)
+            orig = diff.original_content or ""
+            mod = diff.modified_content or ""
+
+            if orig and mod:
+                similarity = self._compute_semantic_similarity(orig, mod)
+                importance = self._analyze_importance(orig, mod, similarity)
+                enhanced_diff["confidence"] = round(1.0 - similarity, 4)
                 enhanced_diff["importance"] = importance
-                
-                # Add confidence based on semantic similarity
-                similarity = self._compute_semantic_similarity(diff.original_content, diff.modified_content)
-                enhanced_diff["confidence"] = 1.0 - similarity  # Higher difference = higher confidence
-            
-            # Add the enhanced difference to the list
+
             enhanced_differences.append(Difference(**enhanced_diff))
-            
         return enhanced_differences
-    
-    def _analyze_importance(self, original: str, modified: str) -> str:
-        """Analyze the importance of a change."""
-        # This is a simplified implementation
-        # In reality, we'd use more sophisticated NLP techniques
-        
-        # Look for key terms that might indicate important changes
+
+    def _analyze_importance(self, original: str, modified: str, similarity: float) -> str:
         important_terms = [
             "shall", "must", "will not", "required", "payment", "terminate",
             "warranty", "liability", "damages", "agree", "obligation"
         ]
-        
-        # Check if any important terms were added or removed
-        original_has_terms = any(term in original.lower() for term in important_terms)
-        modified_has_terms = any(term in modified.lower() for term in important_terms)
-        
-        if original_has_terms != modified_has_terms:
+
+        original_has = any(term in original.lower() for term in important_terms)
+        modified_has = any(term in modified.lower() for term in important_terms)
+        if original_has != modified_has:
             return "high"
-        
-        # Length-based heuristic
-        if len(original) > 100 or len(modified) > 100:
+
+        if similarity < 0.6:
+            return "high"
+        elif similarity < 0.85:
             return "medium"
-            
         return "low"
-    
+
     def _compute_semantic_similarity(self, text1: str, text2: str) -> float:
-        """Compute semantic similarity between two texts."""
         if not text1 or not text2:
             return 0.0
-            
-        # If model is available, use it for semantic similarity
+
         if self.model is not None:
             try:
-                # Encode the texts
-                embedding1 = self.model.encode(text1, convert_to_numpy=True)
-                embedding2 = self.model.encode(text2, convert_to_numpy=True)
-                
-                # Compute cosine similarity
-                similarity = np.dot(embedding1, embedding2) / (np.linalg.norm(embedding1) * np.linalg.norm(embedding2))
-                return float(similarity)
+                emb = self.model.encode([text1, text2], convert_to_numpy=True)
+                emb1, emb2 = emb[0], emb[1]
+                return float(np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2)))
             except Exception as e:
-                print(f"Error computing semantic similarity: {str(e)}")
-                # Fall back to basic similarity
-        
-        # Fallback to basic similarity measure
-        # Calculate Jaccard similarity between words
+                print(f"Error computing similarity: {e}")
+
         words1 = set(text1.lower().split())
         words2 = set(text2.lower().split())
-        
-        intersection = len(words1.intersection(words2))
-        union = len(words1.union(words2))
-        
-        if union == 0:
-            return 0.0
-            
-        return intersection / union
-    
-    def generate_summary(self, differences: List[Difference]) -> str:
-        """Generate a summary of the differences."""
-        # Count types of differences
-        additions = sum(1 for diff in differences if diff.type == "addition")
-        deletions = sum(1 for diff in differences if diff.type == "deletion")
-        modifications = sum(1 for diff in differences if diff.type == "modification")
-        
-        # Count by importance
-        high_importance = sum(1 for diff in differences if diff.importance == "high")
-        medium_importance = sum(1 for diff in differences if diff.importance == "medium")
-        low_importance = sum(1 for diff in differences if diff.importance == "low")
-        
-        # Generate summary
-        summary = f"Found {len(differences)} differences: {additions} additions, {deletions} deletions, and {modifications} modifications. "
-        
-        if high_importance > 0:
-            summary += f"{high_importance} changes were identified as high importance, "
-            summary += f"{medium_importance} as medium importance, and {low_importance} as low importance."
-        
-        return summary
+        intersection = len(words1 & words2)
+        union = len(words1 | words2)
+        return intersection / union if union > 0 else 0.0
+
+    def generate_summary(self, differences: List[Difference]) -> Dict[str, Any]:
+        additions = sum(1 for d in differences if d.type == "addition")
+        deletions = sum(1 for d in differences if d.type == "deletion")
+        modifications = sum(1 for d in differences if d.type == "modification")
+
+        high = sum(1 for d in differences if d.importance == "high")
+        medium = sum(1 for d in differences if d.importance == "medium")
+        low = sum(1 for d in differences if d.importance == "low")
+
+        summary_text = (
+            f"Found {len(differences)} differences: {additions} additions, {deletions} deletions, and {modifications} modifications. "
+        )
+        if high or medium or low:
+            summary_text += (
+                f"{high} high importance, {medium} medium importance, and {low} low importance changes."
+            )
+
+        return {
+            "text": summary_text,
+            "counts": {
+                "total": len(differences),
+                "additions": additions,
+                "deletions": deletions,
+                "modifications": modifications,
+                "high": high,
+                "medium": medium,
+                "low": low
+            }
+        }
+
+    def compare_pair(self, original: str, modified: str) -> Dict[str, Any]:
+        similarity = self._compute_semantic_similarity(original, modified)
+        importance = self._analyze_importance(original, modified, similarity)
+        return {
+            "importance": importance,
+            "confidence": round(1.0 - similarity, 4)
+        }

@@ -1,6 +1,154 @@
-venv/
+# Python
 __pycache__/
-*.pyc
-.env
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
 venv/
+env/
+.venv/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+*.log
+
+# macOS
 .DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+ehthumbs.db
+Icon?
+
+# VS Code settings
+.vscode/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# mypy / pyright / coverage tools
+.mypy_cache/
+.pyright/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE-specific
+.idea/                 # PyCharm
+*.swp                  # Vim swap files
+*.swo
+
+# Model files (if applicable)
+*.h5
+*.ckpt
+*.pth
+*.onnx
+
+# --- YOLO / ML Model Artifacts ---
+*.weights
+*.pt
+*.pb
+*.tflite
+*.cfg
+runs/  # typical YOLOv5/YOLOv8 output dir
+
+# --- Uploaded files and temporary output (adjust folder names if different) ---
+uploads/
+temp/
+tmp/
+output/
+media/
+extracted_text/
+extracted_images/
+
+# --- Tesseract OCR ---
+tessdata/
+
+# --- PDF/Word/Image Test Files (usually large or generated) ---
+*.pdf
+*.docx
+*.doc
+*.png
+*.jpg
+*.jpeg
+
+# --- Backup or generated files ---
+*.bak
+*.tmp
+*~
+
+# --- LanguageTool grammar tool cache/log files (if any) ---
+.language_tool_python_cache/
+
+# --- SentenceTransformers / Transformers cache ---
+# Transformers / Huggingface cache (models, tokenizer data, etc.)
+# Usually under user home (~/.cache/huggingface or ~/.cache/torch)
+# Add this if you ever commit or deploy from repo root and want to ignore cached models
+.cache/
+.cache/huggingface/
+.cache/torch/
+
+# --- NLTK data ---
+# Sometimes nltk downloads data into nltk_data/ or under user home directory
+nltk_data/
+
+# --- Pytest cache and coverage (already included but re-listed for clarity) ---
+.pytest_cache/
+.coverage
+
+# --- Miscellaneous temporary files ---
+*.log  # you already have this, just noting that logs from these modules should be ignored
+
+# --- Potential model or embedding files generated dynamically (if any) ---
+*.bin
+*.pkl
+
+
+# EasyOCR cache or data (if any)
+# EasyOCR by default does not download big models into repo, but if you do download data, ignore it
+easyocr_cache/
+easyocr_model/
+# (only if you create such folders)
+
+# pytesseract / Tesseract output temp files (if any)
+*.tif
+*.tiff
+# Sometimes conversion from PDF to image may create TIFFs temporarily
+
+# PIL Image temp files (if any)
+*.bmp
+
+# pdf2image cache or temp folders (if you create any)
+pdf2image_cache/
+
+# Spacy model files (if downloaded in project folder)
+# Usually installed globally or in venv, but if you download spacy models into repo:
+models/
+en_core_web_sm/
+
+# Dateutil has no files to ignore
+
+# Any IDE or editor specific files related to Python or notebooks:
+# Already covered by .vscode/, .idea/, .ipynb_checkpoints/
+
+# For logs related to your app (you have *.log already)
+*.err
+*.out
+
+*.html
+
+signatureyolo.pt

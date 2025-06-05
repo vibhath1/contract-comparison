@@ -1,36 +1,54 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import os
+from contextlib import asynccontextmanager
 
-from app.api.endpoints import upload, comparison
-from app.config import settings
+try:
+    from app.api.endpoints import comparison
+    from app.config import settings, ensure_directories
+except ImportError as e:
+    raise ImportError(
+        f"Failed to import required modules. "
+        f"Make sure your project structure is correct and PYTHONPATH includes the project root. "
+        f"Original error: {e}"
+    )
 
-app = FastAPI(title=settings.PROJECT_NAME)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Startup and shutdown events.
+    Creates required directories on startup.
+    """
+    # Ensure directories exist on startup
+    ensure_directories()
+    yield
+    # Add shutdown logic here if needed in future
 
-# Set up CORS
+app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
+
+# Configure CORS middleware with wide-open policy (adjust for production!)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(upload.router, prefix=settings.API_V1_STR + "/documents", tags=["documents"])
-app.include_router(comparison.router, prefix=settings.API_V1_STR + "/comparison", tags=["comparison"])
+# Normalize API prefix path to avoid double slashes
+api_prefix = settings.API_V1_STR.rstrip("/")
+
+# Include only the comparison router under /api/v1/comparison (or whatever prefix you use)
+app.include_router(
+    comparison.router,
+    prefix=f"{api_prefix}/comparison",
+    tags=["comparison"],
+)
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to Contract Comparison AI API"}
 
-# Create necessary directories on startup
-@app.on_event("startup")
-def create_directories():
-    os.makedirs("uploads", exist_ok=True)
-    os.makedirs("results", exist_ok=True)
-
 if __name__ == "__main__":
+    # Run with reload in dev; remove reload for production
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-
